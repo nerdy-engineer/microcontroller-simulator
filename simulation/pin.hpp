@@ -3,7 +3,7 @@
 #define PIN_HPP
 
 #include <functional>
-#include "typedefs.hpp"
+#include "simulation/typedefs.hpp"
 
 
 namespace uc {
@@ -18,39 +18,39 @@ class pin {
 
 
     private:
-        pin_state_t _state;
-        pin_mode_t _mode;
-        std::function<void(uc::pin_state_t)> _ad_complete;
+        pin_state_t state_;
+        pin_mode_t mode_;
+        std::function<void(uc::pin_state_t)> ad_complete_;
 
     public:
         pin( ) : 
-        _state{0},
-        _mode{pin_mode_t::high_z},
-        _ad_complete{nullptr}
+        state_{0},
+        mode_{pin_mode_t::high_z},
+        ad_complete_{nullptr}
         {
             
         }
 
 
         pin_mode_t mode() {
-            return _mode;
+            return mode_;
         }
 
         void mode(pin_mode_t pin_mode){
-            _mode = pin_mode;
+            mode_ = pin_mode;
         }
 
         void digital_write(bool state) {
             // Set the pin state to full-on or full-off based on a boolean state
             if (state) {
-                _state = ~static_cast<uc::pin_state_t>(0);
+                state_ = ~static_cast<uc::pin_state_t>(0);
             } else {
-                _state = 0;
+                state_ = 0;
             }
         }
 
         bool digital_read() {
-            if (_state > ~static_cast<uc::pin_state_t>(0)/2) {
+            if (state_ > ~static_cast<uc::pin_state_t>(0)/2) {
                 return true;
             } else {
                 return false;
@@ -58,7 +58,7 @@ class pin {
         }
 
         void PWM_write(pin_state_t value) {
-            _state = value;
+            state_ = value;
         }
 
         uc::pin_state_t analog_read() {
@@ -79,15 +79,15 @@ class pin {
 
         void attach_ad_complete_callback(std::function<void(uc::pin_state_t)> callback) {
             // Attach the "interrupt" callback
-            _ad_complete = callback;
+            ad_complete_ = callback;
         }
     
     private:
         void ad_complete() {
             // Get the state of the A/D pin
             // _state = ... SOMETHING ...;
-            if (_ad_complete != nullptr) {
-                _ad_complete(_state);
+            if (ad_complete_ != nullptr) {
+                ad_complete_(state_);
             }
         }
 

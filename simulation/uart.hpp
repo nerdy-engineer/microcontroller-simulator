@@ -6,63 +6,65 @@
 #include <algorithm>
 #include <ctime>
 #include <vector>
+#include <functional>
 #include "simulation/typedefs.hpp"
+#include "simulation/peripherals.hpp"
 
 
 
 namespace uc {
 
-class uart {
+class uart : public uc::peripheral{
     private: 
-        uc::buffer_size_t _buffer_size;
-        uc::baud_rate_t _baud_rate;
-        buffer_t _rx_buffer;
-        buffer_t _tx_buffer;
-        void *_receive_callback(uint8_t*);
-        void *_transmit_complete_callback(uc::buffer_size_t);
+        uc::buffer_size_t buffer_size_;
+        uc::baud_rate_t baud_rate_;
+        buffer_t rx_buffer_;
+        buffer_t tx_buffer_;
+        std::function<void(uint8_t*)> receive_callback_;
+        std::function<void(uc::buffer_size_t)> transmit_complete_callback_;
 
-        void sim_update(timestep_t dt) { 
+        void sim_update(timestep_t dt) override { 
             // This is what will take care of setting the actual pin-state
         }
 
     public:
         uart(uc::buffer_size_t rx_buffer_size, uc::buffer_size_t tx_buffer_size, uc::baud_rate_t baud_rate) : 
-            _baud_rate{baud_rate},
-            _rx_buffer{rx_buffer_size, 0},
-            _tx_buffer{tx_buffer_size, 0},
-            _receive_callback{nullptr},
-            _transmit_complete_callback{nullptr}
+            baud_rate_{baud_rate},
+            rx_buffer_{rx_buffer_size, 0},
+            tx_buffer_{tx_buffer_size, 0},
+            receive_callback_{nullptr},
+            transmit_complete_callback_{nullptr}
         {
             // Initialize the uart with an empty receive buffer, then fill it with random numbers so the user has to clear the buffer (just like in real life!)
             std::srand(unsigned(std::time(nullptr)));
-            std::generate(_rx_buffer.begin(), _tx_buffer.end(), std::rand);
+            std::generate(rx_buffer_.begin(), tx_buffer_.end(), std::rand);
         }
 
 
         void clear() {
             // Clears the uart buffer
-            std::fill(_rx_buffer.begin(), _rx_buffer.end(), 0);
+            std::fill(rx_buffer_.begin(), rx_buffer_.end(), 0);
         }
 
         uc::buffer_size_t send(void *buffer, uc::buffer_size_t bytes) {
             // Send with a void pointer buffer (interpret as raw bytes)
-            std::copy(static_cast<uint8_t*>(buffer), std::min(bytes, _tx_buffer.size()), _tx_buffer.begin());
+            std::copy(static_cast<uint8_t*>(buffer), std::min(bytes, tx_buffer_.size()), tx_buffer_.begin());
         }
 
-        void attach_receive(void(byte_t*) *callback) {
-            _receive_callback = callback;
+        void attach_receive(std::function<void(uint8_t*)> callback) {
+            receive_callback_ = callback;
         }
 
         void detach_receive() {
-            _receive_callback = nullptr;
+            receive_callback_ = nullptr;
         }
 
-        void attach_transmit_complete(void(uc::buffer_size_t) *callback) {
-            _transmit_complete_callback = callback;
+        void attach_transmit_complete(std::function<void(uc::buffer_size_t)> callback) {
+            transmit_complete_callback_ = callback;
         }
 
         void detach_transmit_complete() {
-            _transmit_complete_callback = nullptr;
+            transmit_complete_callback_ = nullptr;
         }
 
 };

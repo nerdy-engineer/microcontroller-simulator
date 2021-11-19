@@ -12,7 +12,7 @@ typedef double freq_t;
 typedef int64_t pin_state_t;
 typedef size_t buffer_size_t;
 typedef uint32_t baud_rate_t;
-typedef std::vector<byte_t> buffer_t;
+typedef std::vector<uint8_t> buffer_t;
 
 };
 
