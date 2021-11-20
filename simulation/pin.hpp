@@ -60,37 +60,7 @@ class pin {
         void PWM_write(pin_state_t value) {
             state_ = value;
         }
-
-        uc::pin_state_t analog_read() {
-            // This one needs to include some kind of processing delay before returning the _state value
-            
-            // Kick off a/d conversion
-            start_ad_convert();
-
-            // Wait for a/d conversion
-
-            // Return a/d value when conversion has completed
-        }
-
-        void start_ad_convert() {
-            // Start the A/D conversion
-        }
-
-
-        void attach_ad_complete_callback(std::function<void(uc::pin_state_t)> callback) {
-            // Attach the "interrupt" callback
-            ad_complete_ = callback;
-        }
-    
-    private:
-        void ad_complete() {
-            // Get the state of the A/D pin
-            // _state = ... SOMETHING ...;
-            if (ad_complete_ != nullptr) {
-                ad_complete_(state_);
-            }
-        }
-
+        
 
 
 };

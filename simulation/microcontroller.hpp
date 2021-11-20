@@ -21,12 +21,14 @@ class microcontroller {
         uc::freq_t core_clock_;
         std::map<std::string, uc::pin> pins_;
         std::map<std::string, uc::peripheral> peripherals_;
+        std::vector<uc::task&> tasks_;
 
     public:
         microcontroller(uc::freq_t core_clock) :
             core_clock_{core_clock},
             pins_{},
-            peripherals_{}
+            peripherals_{},
+            tasks_{}
         {
 
         }
@@ -38,6 +40,14 @@ class microcontroller {
                 throw std::out_of_range(std::format("Simulation state does not contain key {}", name));
             }
             return pin_it->second;
+        }
+
+        void add_task(const uc::task& task) {
+            tasks_.push_back(task);
+        }
+
+        void boot() {
+            // launch each task in tasks in it's own thread
         }
 };
 
