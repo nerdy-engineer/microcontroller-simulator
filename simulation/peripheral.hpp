@@ -13,15 +13,15 @@ class peripheral {
     private:
         std::map<std::string, uc::pin> pins_;   // Stores any pins associated with the peripheral
 
+        peripheral() :
+            pins_{}
+        {
+            
+        }
 
     public:
-    peripheral() :
-        pins_{}
-    {
 
-    }
-
-    virtual void sim_update(uc::timestep_t dt) = 0;
+        virtual void sim_update(uc::timestep_t dt) = 0;
 
     // Make sure to create a factory function to create a given
     // peripheral that will add the appropriate pins
