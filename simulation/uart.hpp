@@ -49,7 +49,7 @@ class uart : public uc::peripheral{
 
         uc::buffer_size_t send(uint8_t *buffer, uc::buffer_size_t bytes) {
             // Send with a void pointer buffer (interpret as raw bytes)
-            std::copy(buffer, std::min(bytes, tx_buffer_.size()), tx_buffer_.begin());
+            std::copy(buffer, buffer + std::min(bytes, tx_buffer_.size()), tx_buffer_.begin());
         }
 
         void attach_receive(std::function<void(uint8_t*)> callback) {

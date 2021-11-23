@@ -4,7 +4,7 @@
 
 #include <functional>
 #include "simulation/typedefs.hpp"
-
+#include "simulation/peripheral.hpp"
 
 namespace uc {
 
@@ -18,12 +18,15 @@ class pin {
 
 
     private:
+        const std::string name_;
         pin_state_t state_;
         pin_mode_t mode_;
         std::function<void(uc::pin_state_t)> ad_complete_;
+        std::vector<uc::peripheral&> peripherals_;
 
     public:
-        pin( ) : 
+        pin(const std::string& name ) : 
+        name_{name},
         state_{0},
         mode_{pin_mode_t::high_z},
         ad_complete_{nullptr}
@@ -61,7 +64,9 @@ class pin {
             state_ = value;
         }
         
-
+        void add_peripheral(uc::peripheral& peripheral) {
+            peripherals_.push_back(peripheral);
+        }
 
 };
 

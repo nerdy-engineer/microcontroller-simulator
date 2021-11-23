@@ -7,6 +7,7 @@
 #include <format>
 #include <stdexcept>
 #include <vector>
+#include <thread>
 
 #include "simulation/typedefs.hpp"
 #include "simulation/pin.hpp"
@@ -33,6 +34,9 @@ class microcontroller {
 
         }
 
+        void add_pin(const std::string& name) {
+            pins_[name] = uc::pin(name);
+        }
 
         uc::pin& pin(const std::string& name) {
             auto pin_it = pins_.find(name);
@@ -47,8 +51,33 @@ class microcontroller {
         }
 
         void boot() {
-            // launch each task in tasks in it's own thread
+            // launch each task in tasks in its own thread
+            for (auto t : tasks_) {
+                t.start();
+            }
         }
+
+        void shutdown() {
+            // end each task
+            for (auto t : tasks_) {
+                t.stop();
+            }
+        }
+
+        void pinMode(const std::string& name, uc::pin::pin_mode_t mode) {
+            pin(name).mode(mode);
+        }
+
+        void digitalWrite(const std::string& name, bool state) {
+            pin(name).digital_write(state);
+        }
+
+        bool digitalRead(const std::string& name) {
+            return pin(name).digital_read();
+        }
+
+
+
 };
 
 
