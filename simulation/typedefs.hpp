@@ -7,7 +7,6 @@
 namespace uc {
 
 typedef uint64_t timestep_t;
-typedef int64_t reporting_state_t;
 typedef double freq_t;
 typedef int64_t pin_state_t;
 typedef uint32_t baud_rate_t;

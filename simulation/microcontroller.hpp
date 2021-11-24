@@ -20,30 +20,28 @@ namespace uc {
 class microcontroller {
     private:
         uc::freq_t core_clock_;
-        std::map<std::string, uc::pin> pins_;
-        std::map<std::string, uc::peripheral> peripherals_;
+        std::map<std::string_view, uc::pin> pins_;
+        std::map<std::string_view, uc::peripheral> peripherals_;
         std::vector<uc::task&> tasks_;
+        size_t uc_time_;
 
     public:
         microcontroller(uc::freq_t core_clock) :
             core_clock_{core_clock},
             pins_{},
             peripherals_{},
-            tasks_{}
+            tasks_{},
+            uc_time_{0}
         {
 
         }
 
-        void add_pin(const std::string& name) {
+        void add_pin(const std::string_view name) {
             pins_[name] = uc::pin(name);
         }
 
-        uc::pin& pin(const std::string& name) {
-            auto pin_it = pins_.find(name);
-            if (pin_it == pins_.end()) {
-                throw std::out_of_range(std::format("Simulation state does not contain key {}", name));
-            }
-            return pin_it->second;
+        uc::pin& pin(const std::string_view name) {
+            return pins_.at(name);
         }
 
         void add_task(const uc::task& task) {
@@ -64,19 +62,21 @@ class microcontroller {
             }
         }
 
-        void pinMode(const std::string& name, uc::pin::pin_mode_t mode) {
+        void pinMode(const std::string_view name, uc::pin::pin_mode_t mode) {
             pin(name).mode(mode);
         }
 
-        void digitalWrite(const std::string& name, bool state) {
+        void digitalWrite(const std::string_view name, bool state) {
             pin(name).digital_write(state);
         }
 
-        bool digitalRead(const std::string& name) {
+        bool digitalRead(const std::string_view name) {
             return pin(name).digital_read();
         }
 
-
+        void simStep() {
+            uc_time_++;
+        }
 
 };
 

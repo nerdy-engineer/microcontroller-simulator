@@ -25,7 +25,7 @@ class pin {
         std::vector<uc::peripheral&> peripherals_;
 
     public:
-        pin(const std::string& name ) : 
+        pin(const std::string_view name ) : 
         name_{name},
         state_{0},
         mode_{pin_mode_t::high_z},

@@ -16,7 +16,7 @@ namespace uc {
 class simulation_state {
     private:
         uc::timestep_t t_;
-        std::map<std::string, uc::reporting_state_t> states_;
+        std::map<std::string_view, uc::pin_state_t> states_;
     
 
     public:
@@ -27,17 +27,13 @@ class simulation_state {
             // simulation state constructor
         }
 
-        void add_field(const std::string& name, const uc::pin& pin) {
+        void add_field(const std::string_view name, const uc::pin& pin) {
             // Not sure if this is optimal
-            states_[name] = pin;
+            states_.insert(name, pin);
         }
 
-        uc::pin& get(const std::string& name) {
-            auto value = states_.find(name);
-            if (value == states_.end()) {
-                throw std::out_of_range(std::format("Simulation state does not contain key {}", name));
-            }
-            return value->second;
+        uc::pin& get(const std::string_view name) {
+            return states_.at(name);
         }
 
         uc::timestep_t timestep(){

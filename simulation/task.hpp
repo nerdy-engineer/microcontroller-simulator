@@ -10,24 +10,27 @@
 
 namespace uc {
 
-class task {
-    // Note! Each task should be run in its own thread managed by the microcontroller!
+class task {    
     private:
+        std::string_view name_;
         uc::microcontroller* uc_;
         bool run_;
         std::thread thread_;
     
+    protected:
+        void sleep(size_t microseconds) {
+            // Do something here to handle threads and interrupts and use uc_ to sleep properly
+        }
+    
+
     public:
-        task(uc::microcontroller* microcontroller) :
+        task(const std::string_view name, uc::microcontroller* microcontroller) :
+        name_{name},
         uc_{microcontroller},
         run_{false},
         thread_{}
         {
             
-        }
-
-        void sleep(size_t microseconds) {
-            // Do something here to handle threads and interrupts and use uc_ to sleep properly
         }
 
         void start() {
