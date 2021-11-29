@@ -14,12 +14,14 @@ namespace uc {
 class simulator {
     private:
         std::vector<uc::microcontroller&> microcontrollers_;
+        std::vector<uc::carrier&> carrier_frequencies_;
         std::chrono::duration dt_;
 
 
     public:
         simulator(std::vector<uc::microcontroller>& microcontrollers, std::chrono::duration dt) :
             microcontrollers_{microcontrollers},
+            carrier_frequencies_{},
             dt_{dt}
         {
 
