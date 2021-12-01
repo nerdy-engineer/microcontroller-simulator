@@ -8,6 +8,7 @@
 #include <stdexcept>
 #include <vector>
 #include <thread>
+#include <chrono>
 
 #include "simulation/typedefs.hpp"
 #include "simulation/pin.hpp"
@@ -23,7 +24,7 @@ class microcontroller {
         std::map<std::string_view, uc::pin> pins_;
         std::map<std::string_view, uc::peripheral> peripherals_;
         std::vector<uc::task&> tasks_;
-        size_t uc_time_;
+        std::chrono::time_point uc_time_;
 
     public:
         microcontroller(uc::freq_t core_clock) :
@@ -74,8 +75,8 @@ class microcontroller {
             return pin(name).digital_read();
         }
 
-        void simStep() {
-            uc_time_++;
+        void simStep(std::chrono::duration dt) {
+            uc_time_ += dt;
         }
 
 };

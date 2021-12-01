@@ -28,11 +28,15 @@ class uart : public uc::peripheral{
         }
 
     public:
-        uart(uc::buffer_size_t rx_buffer_size, uc::buffer_size_t tx_buffer_size, uc::baud_rate_t baud_rate) : 
+        uart(const std::string& name, uc::pin& tx_pin, uc::pin& rx_pin, uc::buffer_size_t rx_buffer_size, uc::buffer_size_t tx_buffer_size, uc::baud_rate_t baud_rate) : 
+            name_{name},
             baud_rate_{baud_rate},
             receive_callback_{nullptr},
             transmit_complete_callback_{nullptr}
         {
+            add_pin("tx", tx_pin);
+            add_pin("rx", rx_pin);
+
             rx_buffer_ = buffer_t(rx_buffer_size, 0);
             tx_buffer_ = buffer_t(tx_buffer_size, 0);
             

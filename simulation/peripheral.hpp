@@ -11,9 +11,11 @@ namespace uc {
 
 class peripheral {
     private:
-        std::map<std::string, uc::pin> pins_;   // Stores any pins associated with the peripheral
+        std::string name_;
+        std::map<std::string, uc::pin&> pins_;   // Stores any pins associated with the peripheral (not sure about the std::less<>, SO says it's necessary to be able to use std::string_view as a lookup)
 
         peripheral() :
+            name_{},
             pins_{}
         {
             
@@ -22,9 +24,11 @@ class peripheral {
     public:
 
         virtual void sim_update(uc::timestep_t dt) = 0;
+        
+        void add_pin(const std::string& peripheral_pin_name, uc::pin& pin) {
+            pins_[peripheral_pin_name] = pin.route(this);
+        }
 
-    // Make sure to create a factory function to create a given
-    // peripheral that will add the appropriate pins
 
 };
 

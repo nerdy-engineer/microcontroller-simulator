@@ -25,6 +25,7 @@ class pin {
         std::vector<uc::peripheral&> peripherals_;
 
     public:
+        // Needs to be non-copyable
         pin(const std::string_view name ) : 
         name_{name},
         state_{0},
@@ -34,6 +35,15 @@ class pin {
             
         }
 
+        std::string_view name() {
+            return name_;
+        }
+
+        pin& route(uc::peripheral* peripheral) {
+            // Connect the pin to a peripheral
+            peripherals_.push_back(*peripheral);
+            return *this;
+        }
 
         pin_mode_t mode() {
             return mode_;
