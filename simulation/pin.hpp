@@ -26,7 +26,7 @@ class pin {
 
     public:
         // Needs to be non-copyable
-        pin(const std::string_view name ) : 
+        pin(const std::string_view name) : 
         name_{name},
         state_{0},
         mode_{pin_mode_t::high_z},
@@ -34,6 +34,8 @@ class pin {
         {
             
         }
+
+        pin(const pin&) = delete;
 
         std::string_view name() {
             return name_;
@@ -53,6 +55,11 @@ class pin {
             mode_ = pin_mode;
         }
 
+        void add_peripheral(uc::peripheral& peripheral) {
+            peripherals_.push_back(peripheral);
+        }
+
+    /*
         void digital_write(bool state) {
             // Set the pin state to full-on or full-off based on a boolean state
             if (state) {
@@ -73,10 +80,9 @@ class pin {
         void PWM_write(pin_state_t value) {
             state_ = value;
         }
+    */
         
-        void add_peripheral(uc::peripheral& peripheral) {
-            peripherals_.push_back(peripheral);
-        }
+        
 
 };
 

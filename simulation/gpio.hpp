@@ -14,10 +14,10 @@ class gpio : uc::peripheral {
 
 
     public:
-        gpio(const std::string_view name, uc::pin& pin) :
+        gpio(const std::string& name, uc::pin& pin) :
             name_{name}
         {
-            pins_{pin}
+            pins_[name] = pin;
         }
 
 };

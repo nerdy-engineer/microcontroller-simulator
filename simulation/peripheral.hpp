@@ -26,7 +26,7 @@ class peripheral {
         virtual void sim_update(uc::timestep_t dt) = 0;
         
         void add_pin(const std::string& peripheral_pin_name, uc::pin& pin) {
-            pins_[peripheral_pin_name] = pin.route(this);
+            pins_.emplace(peripheral_pin_name, pin.route(this));
         }
 
 
