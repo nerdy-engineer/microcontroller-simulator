@@ -3,6 +3,7 @@
 #define PIN_HPP
 
 #include <functional>
+#include <vector>
 #include "simulation/typedefs.hpp"
 #include "simulation/peripheral.hpp"
 
@@ -26,7 +27,7 @@ class pin {
 
     public:
         // Needs to be non-copyable
-        pin(const std::string_view name) : 
+        pin(const std::string& name) : 
         name_{name},
         state_{0},
         mode_{pin_mode_t::high_z},
@@ -37,7 +38,7 @@ class pin {
 
         pin(const pin&) = delete;
 
-        std::string_view name() {
+        const std::string& name() const noexcept {
             return name_;
         }
 
@@ -47,7 +48,7 @@ class pin {
             return *this;
         }
 
-        pin_mode_t mode() {
+        pin_mode_t mode() const noexcept {
             return mode_;
         }
 

@@ -2,6 +2,7 @@
 #ifndef TYPEDEFS_HPP
 #define TYPEDEFS_HPP
 
+#include <vector>
 #include <cstdint>
 
 namespace uc {

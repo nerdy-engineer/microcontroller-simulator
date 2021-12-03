@@ -21,8 +21,8 @@ namespace uc {
 class microcontroller {
     private:
         uc::freq_t core_clock_;
-        std::map<std::string_view, uc::pin> pins_;
-        std::map<std::string_view, uc::peripheral> peripherals_;
+        std::map<std::string, uc::pin> pins_;
+        std::map<std::string, uc::peripheral> peripherals_;
         std::vector<uc::task&> tasks_;
         std::chrono::time_point uc_time_;
 
@@ -37,8 +37,8 @@ class microcontroller {
 
         }
 
-        void add_pin(const std::string_view name) {
-            pins_[name] = uc::pin(name);
+        void add_pin(const std::string& name) {
+            pins_.emplace(name, uc::pin(name));
         }
 
         uc::pin& pin(const std::string_view name) {
