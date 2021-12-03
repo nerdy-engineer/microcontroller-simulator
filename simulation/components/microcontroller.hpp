@@ -4,15 +4,14 @@
 
 #include <map>
 #include <string>
-#include <format>
 #include <stdexcept>
 #include <vector>
 #include <thread>
 #include <chrono>
 
 #include "simulation/typedefs.hpp"
-#include "simulation/pin.hpp"
-#include "simulation/task.hpp"
+#include "simulation/components/pin.hpp"
+#include "simulation/components/task.hpp"
 
 
 namespace uc {
@@ -20,15 +19,13 @@ namespace uc {
 
 class microcontroller {
     private:
-        uc::freq_t core_clock_;
         std::map<std::string, uc::pin> pins_;
         std::map<std::string, uc::peripheral> peripherals_;
         std::vector<uc::task&> tasks_;
-        std::chrono::time_point uc_time_;
+        uc::pulse_t uc_time_;
 
     public:
-        microcontroller(uc::freq_t core_clock) :
-            core_clock_{core_clock},
+        microcontroller() :
             pins_{},
             peripherals_{},
             tasks_{},
@@ -41,11 +38,11 @@ class microcontroller {
             pins_.emplace(name, uc::pin(name));
         }
 
-        uc::pin& pin(const std::string_view name) {
+        uc::pin& pin(const std::string& name) {
             return pins_.at(name);
         }
 
-        void add_task(const uc::task& task) {
+        void add_task(uc::task& task) {
             tasks_.push_back(task);
         }
 
@@ -63,27 +60,26 @@ class microcontroller {
             }
         }
 
-        void pinMode(const std::string_view name, uc::pin::pin_mode_t mode) {
+        /*
+        void pinMode(const std::string& name, uc::pin::pin_mode_t mode) {
             pin(name).mode(mode);
         }
 
-        void digitalWrite(const std::string_view name, bool state) {
+        void digitalWrite(const std::string& name, bool state) {
             pin(name).digital_write(state);
         }
 
-        bool digitalRead(const std::string_view name) {
+        bool digitalRead(const std::string& name) {
             return pin(name).digital_read();
         }
+        */
 
-        void simStep(std::chrono::duration dt) {
+        // replace this with the microcontroller clock link
+        void simStep(uc::pulse_t dt) {
             uc_time_ += dt;
         }
 
 };
-
-
-
-
 
 
 }

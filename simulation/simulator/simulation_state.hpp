@@ -5,10 +5,8 @@
 #include <map>
 #include <string>
 #include <stdexcept>
-#include <format>
 #include "simulation/typedefs.hpp"
-#include "simulation/pin.hpp"
-
+#include "simulation/components/pin.hpp"
 
 
 namespace uc {
@@ -16,7 +14,7 @@ namespace uc {
 class simulation_state {
     private:
         uc::timestep_t t_;
-        std::map<std::string_view, uc::pin_state_t> states_;
+        std::map<std::string, uc::pin&> states_;
     
 
     public:
@@ -27,16 +25,16 @@ class simulation_state {
             // simulation state constructor
         }
 
-        void add_field(const std::string_view name, const uc::pin& pin) {
+        void add_field(std::string_view name, uc::pin& pin) {
             // Not sure if this is optimal
-            states_.insert(name, pin);
+            states_.emplace(name, pin);
         }
 
-        uc::pin& get(const std::string_view name) {
+        uc::pin& get(const std::string& name) const noexcept {
             return states_.at(name);
         }
 
-        uc::timestep_t timestep(){
+        uc::timestep_t timestep() const noexcept {
             return t_;
         }
 
@@ -45,7 +43,6 @@ class simulation_state {
         }
 
 };
-
 
 }
 

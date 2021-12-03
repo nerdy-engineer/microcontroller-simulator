@@ -5,7 +5,7 @@
 #include <functional>
 #include <vector>
 #include "simulation/typedefs.hpp"
-#include "simulation/peripheral.hpp"
+#include "simulation/components/peripheral.hpp"
 
 namespace uc {
 

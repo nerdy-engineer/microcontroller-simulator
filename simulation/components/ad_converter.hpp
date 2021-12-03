@@ -3,7 +3,7 @@
 #define AD_CONVERTER_HPP
 
 #include <functional>
-#include "simulation/peripheral.hpp"
+#include "simulation/components/peripheral.hpp"
 #include "simulation/typedefs.hpp"
 
 namespace uc {

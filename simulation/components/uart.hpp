@@ -8,7 +8,7 @@
 #include <vector>
 #include <functional>
 #include "simulation/typedefs.hpp"
-#include "simulation/peripheral.hpp"
+#include "simulation/components/peripheral.hpp"
 
 
 

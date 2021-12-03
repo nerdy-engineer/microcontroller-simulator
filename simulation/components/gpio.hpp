@@ -2,9 +2,9 @@
 #ifndef GPIO_HPP
 #define GPIO_HPP
 
-#include "simulation/peripheral.hpp"
+#include "simulation/components/peripheral.hpp"
 #include "simulation/typedefs.hpp"
-#include "simulation/pin.hpp"
+#include "simulation/components/pin.hpp"
 
 
 namespace uc {
@@ -17,7 +17,7 @@ class gpio : uc::peripheral {
         gpio(const std::string& name, uc::pin& pin) :
             name_{name}
         {
-            pins_[name] = pin;
+            pins_.emplace(name, pin);
         }
 
 };

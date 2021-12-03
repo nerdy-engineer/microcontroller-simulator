@@ -3,7 +3,7 @@
 #define TASK_HPP
 
 #include <thread>
-#include "simulation/microcontroller.hpp"
+#include "simulation/components/microcontroller.hpp"
 #include "simulation/typedefs.hpp"
 
 

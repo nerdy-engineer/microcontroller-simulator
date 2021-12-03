@@ -24,7 +24,7 @@ class clock {
 
     }
 
-    uc::timestep_t time() const noexcept {
+    uc::timestep_t time() {
         uc::timestep_t r;
         while(!m_.try_lock()) {
             // Wait until you can acquire the lock
@@ -34,16 +34,16 @@ class clock {
         return r;
     }
 
-    void step(std::chrono::duration dt) {
+    void step(uc::pulse_t dt) {
         while (!m_.try_lock()) {
             // Wait until you can acquire the lock
         }
         // increment counts_ by the appropriate number of counts equivalent to dt
-        counts_ += static_cast<uc::timestep_t>(std::ceil(dt/static_cast<double>(frequency_)));
+        counts_ += static_cast<uc::timestep_t>(std::ceil((dt/static_cast<double>(frequency_))));
         m_.unlock();
     }
 
-}
+};
 
 
 }

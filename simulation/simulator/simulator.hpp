@@ -4,8 +4,9 @@
 
 #include <vector>
 #include <chrono>
-#include "simulation/microcontroller.hpp"
-#include "simulation/task.hpp"
+#include "simulation/rf/carrier.hpp"
+#include "simulation/components/microcontroller.hpp"
+#include "simulation/components/task.hpp"
 #include "simulation/typedefs.hpp"
 
 
@@ -14,17 +15,16 @@ namespace uc {
 class simulator {
     private:
         std::vector<uc::microcontroller&> microcontrollers_;
-        std::vector<uc::carrier&> carrier_frequencies_;
-        std::chrono::duration dt_;
+        std::vector<uc::rf::carrier&> carrier_frequencies_;
+        uc::pulse_t dt_;
 
 
     public:
-        simulator(std::vector<uc::microcontroller>& microcontrollers, std::chrono::duration dt) :
-            microcontrollers_{microcontrollers},
+        simulator(std::vector<uc::microcontroller&> microcontrollers, uc::pulse_t dt) :
             carrier_frequencies_{},
             dt_{dt}
         {
-
+            microcontrollers_ = microcontrollers;
         }
 
         void add_microcontroller(uc::microcontroller& uc) {
@@ -41,7 +41,7 @@ class simulator {
             }
         }
 
-}
+};
 
 
 }
