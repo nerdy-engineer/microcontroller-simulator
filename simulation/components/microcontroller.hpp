@@ -29,13 +29,14 @@ class microcontroller {
             pins_{},
             peripherals_{},
             tasks_{},
-            uc_time_{0}
+            uc_time_{}
         {
 
         }
 
         void add_pin(const std::string& name) {
             pins_.emplace(name, uc::pin(name));
+            pins_.at(name).route(*this);
         }
 
         uc::pin& pin(const std::string& name) {

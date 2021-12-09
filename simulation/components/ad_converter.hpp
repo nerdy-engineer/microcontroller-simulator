@@ -14,6 +14,12 @@ class ad_converter : public uc::peripheral {
         uc::pin_state_t value_;
 
     public:
+        ad_converter(const std::string& name, uc::pin& pin) :
+            uc::peripheral{name}
+        {
+            add_pin("A/D", pin);
+        }
+
         uc::pin_state_t analog_read() {
             // This one needs to include some kind of processing delay before returning the _state value
             

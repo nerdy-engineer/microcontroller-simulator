@@ -15,7 +15,7 @@ class gpio : uc::peripheral {
 
     public:
         gpio(const std::string& name, uc::pin& pin) :
-            name_{name}
+            uc::peripheral{name}
         {
             pins_.emplace(name, pin);
         }

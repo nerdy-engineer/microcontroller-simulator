@@ -12,7 +12,7 @@ namespace uc {
 
 class task {    
     private:
-        std::string_view name_;
+        std::string name_;
         uc::microcontroller* uc_;
         bool run_;
         std::thread thread_;
@@ -24,7 +24,7 @@ class task {
     
 
     public:
-        task(const std::string_view name, uc::microcontroller* microcontroller) :
+        task(const std::string& name, uc::microcontroller* microcontroller) :
         name_{name},
         uc_{microcontroller},
         run_{false},

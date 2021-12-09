@@ -29,7 +29,7 @@ class uart : public uc::peripheral{
 
     public:
         uart(const std::string& name, uc::pin& tx_pin, uc::pin& rx_pin, uc::buffer_size_t rx_buffer_size, uc::buffer_size_t tx_buffer_size, uc::baud_rate_t baud_rate) : 
-            name_{name},
+            uc::peripheral{name},
             baud_rate_{baud_rate},
             receive_callback_{nullptr},
             transmit_complete_callback_{nullptr}

@@ -39,7 +39,7 @@ class clock {
             // Wait until you can acquire the lock
         }
         // increment counts_ by the appropriate number of counts equivalent to dt
-        counts_ += static_cast<uc::timestep_t>(std::ceil((dt/static_cast<double>(frequency_))));
+        counts_ += static_cast<uc::timestep_t>(std::chrono::ceil<uc::pulse_t>(dt*static_cast<double>(frequency_)).count());
         m_.unlock();
     }
 
