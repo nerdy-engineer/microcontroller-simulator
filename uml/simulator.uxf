@@ -1,6 +1,6 @@
 <diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Microcontroller</help_text><element><id>UMLClass</id><coordinates><x>280</x><y>0</y><w>300</w><h>800</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
 Simulator::Microcontroller::Microcontroller
-{Clock Speed, I/O Voltage}
+{Clock Speed}
 --
 -id: id_t
 (Assigned by simulator)
@@ -24,7 +24,7 @@ _-ClassAttribute: Map&lt;String, Peripheral&gt;_
 --
 -pins: Map&lt;String, Pin&gt;
 (Pins are added by adding a peripheral with pins)
-_-ClassAtttribute: Map&lt;String, Pin&gt;_
+_-ClassAtttribute: Map&lt;String, Pin&amp;&gt;_
 --
 -tasks: Map&lt;String, Task&gt;
 (Added to by factory method)
@@ -52,7 +52,11 @@ private:
 #Method(): size_t
 /+ram_utilization()/
 /Returns the ram utilization of all tasks being run on the/
-/microcontroller/
+/microcontroller. (Will likely be something similar to:/
+/utilization = 0/
+/for (auto task : tasks) {/
+/   utilization += task.ram_utilization();/
+/}/
 --
 Responsibilities
 -- Hold all entities connected to the microcontroller
@@ -96,7 +100,7 @@ Responsibilities
    objects
 -- Run the simulation
 -- Provide an interface from which to pull the
-   simulation states</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>513</y><w>240</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+   simulation states</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>623</y><w>240</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
 Simulator::Microcontroller::Task
 Inherits from:
 Simulator::Microcontroller::AbstractTask
@@ -108,8 +112,7 @@ Simulator::Microcontroller::AbstractTask
 --
 Responsibilities
 -- This is the code the microcontroller
-   will run.
-group=1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>0</y><w>240</w><h>500</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+   will run.</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>890</x><y>0</y><w>240</w><h>610</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
 Simulator::Microcontroller::AbstractTask
 --
 -pid: id_t}
@@ -124,6 +127,10 @@ _-ClassAttribute: Microcontroller&amp;_
 (Reference to the microcontroller
 the task is running on. Assigned
 when added to the microcontroller.)
+--
+-base_size: size_t
+_-ClassAttribute: size_t_
+/On initialization, base_size=sizeof(*this)/
 --
 #VirtualMethod(): int
 /+main()/
@@ -146,7 +153,11 @@ when added to the microcontroller.)
 /Called only once when it's added to the/
 /microcontroller. This method will also/
 /assign the process ID./
-group=1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>0</y><w>290</w><h>230</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+--
+#Method(): size_t
+/+ram_utilization()/
+/Returns sizeof(*this)-base_size; which will/
+/be the ram utilization of main()./</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>0</y><w>290</w><h>230</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
 Simulator::Microcontroller::AbstractPeripheral
 --
 -clock: Clock&amp;
@@ -162,6 +173,46 @@ _-ClassAttribute: bool_
 #Method(): void
 /+tick()/
 --
-#Method(): PeripheralState
+#VirtualMethod(): PeripheralState
 /+get_state()/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>240</y><w>290</w><h>510</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Microcontroller::GPIO_Pin
+{Vhigh, Vmax}
+--
+-name: String
+_-ClassAttribute: String_
+--
+-v_high: voltage_t
+_-ClassAttribute: voltage_t_
+/(Output voltage for "HIGH" digital output)/
+--
+-v_max: voltage_t
+_-ClassAttribute: voltage_t_
+/(Maximum input voltage tolerance for this port)/
+--
+-pin: Pin
+_-ClassAttribute: Pin
+--
+-.
+#Method(mode: PinMode): PinMode
+/+mode()/
+/Sets and returns the pin's mode./
+-.
+#Method(state: PinState): PinState
+/+set()/
+/Sets the pin into a valid PinState. Does nothing/
+/if the specified state is invalid for the pin's mode./
+/Returns the state of the pin after the operation./
+/(If the returned value is different than the specified
+/value, the set failed)/
+-.
+#Method(): PinState
+/+get_state()/
+/Returns the state of the pin./
+-.
+-..
+#Method(): pair&lt;voltage_t, PinState&gt;
+/+sim_read_state()/
+/Returns a pair with the output voltage by the pin and/
+/the logical output of the pin./
 </panel_attributes><additional_attributes></additional_attributes></element></diagram>
