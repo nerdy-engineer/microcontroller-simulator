@@ -146,4 +146,22 @@ when added to the microcontroller.)
 /Called only once when it's added to the/
 /microcontroller. This method will also/
 /assign the process ID./
-group=1</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+group=1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>590</x><y>0</y><w>290</w><h>230</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Microcontroller::AbstractPeripheral
+--
+-clock: Clock&amp;
+_-ClassAttribute: Clock_
+--
+-pins: Map&lt;String, Pin&gt;
+_-ClassAttribute: Map&lt;String, Pin&gt;_
+--
+-enabled: bool
+_-ClassAttribute: bool_
+(default: False)
+--
+#Method(): void
+/+tick()/
+--
+#Method(): PeripheralState
+/+get_state()/
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>
