@@ -1,0 +1,149 @@
+<diagram program="umletino" version="14.4.0-SNAPSHOT"><zoom_level>10</zoom_level><help_text>Microcontroller</help_text><element><id>UMLClass</id><coordinates><x>280</x><y>0</y><w>300</w><h>800</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Microcontroller::Microcontroller
+{Clock Speed, I/O Voltage}
+--
+-id: id_t
+(Assigned by simulator)
+_-ClassAttribute: id_t_
+--
+-name: String
+(Assigned by developer)
+_-ClassAttribute: String_
+--
+-clock_source: Clock
+(Assigned by developer)
+_-ClassAttribute: Clock_
+--
+-voltage: double
+(Assigned by developer)
+_-ClassAttribute: double_
+--
+-peripherals: Map&lt;String, Peripheral&gt;
+(Added to by factory method)
+_-ClassAttribute: Map&lt;String, Peripheral&gt;_
+--
+-pins: Map&lt;String, Pin&gt;
+(Pins are added by adding a peripheral with pins)
+_-ClassAtttribute: Map&lt;String, Pin&gt;_
+--
+-tasks: Map&lt;String, Task&gt;
+(Added to by factory method)
+_-ClassAttribute: Map&lt;String, Task&gt;_
+--
+-.
+private:
+#Method(name: String, type: PinType): void
+/+add_pin()/
+-.
+--
+#Method(name: String, type: Peripheral): void
+/+add_peripheral()/
+--
+#Method(task: Task): void
+/+add_task/
+(Uses the Task.name() return value for the map entry)
+--
+#Method(): ObjectState
+/+get_state()/
+--
+#Method(delta_t: duration): void
+/+tick()/
+--
+#Method(): size_t
+/+ram_utilization()/
+/Returns the ram utilization of all tasks being run on the/
+/microcontroller/
+--
+Responsibilities
+-- Hold all entities connected to the microcontroller
+-- Register entities that communicate with the world
+   outside the microcontroller with the simulation
+   environment
+-- Update peripheral and pin states every simulation
+   tick</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>270</w><h>480</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Simulator
+{Simulation Tick Rate}
+--
+-tick_rate: double {Hz}
+_-ClassAttribute: double_
+--
+-objects: map&lt;String, SimObject&gt;
+_-ClassAttribute: map&lt;String, SimObject&gt;
+--
+-connection_manager: ConnectionManager
+_-ClassAttribute: ConnectionManager_
+--
+#Method(): void
+/+tick()/
+/Calls the tick function on all SimObjects/
+/for a simulation step/
+--
+#Method(sim_object: SimObject): void
+/+add_sim_object()/
+--
+#Method(): NetlistState
+/+get_state()/
+/Returns the state of all netlist nodes/
+--
+#Method(): utilization_t
+/+get_utilizations()/
+/Returns the RAM (and eventually CPU)/
+/utilization of each microcontroller in the/
+/simulation./
+--
+Responsibilities
+-- Hold and maintain all of the simulation
+   objects
+-- Run the simulation
+-- Provide an interface from which to pull the
+   simulation states</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>513</y><w>240</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Microcontroller::Task
+Inherits from:
+Simulator::Microcontroller::AbstractTask
+{Name}
+--
+#OverrideMethod(): int
+/+main()/
+/This is the user code/
+--
+Responsibilities
+-- This is the code the microcontroller
+   will run.
+group=1</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>940</x><y>0</y><w>240</w><h>500</h></coordinates><panel_attributes>&lt;&lt;Stereotype&gt;&gt;
+Simulator::Microcontroller::AbstractTask
+--
+-pid: id_t}
+_-ClassAttribute: id_t_
+(Process ID)
+--
+-name: String
+_-ClassAttribute: String_
+--
+-uc: Microcontroller&amp;
+_-ClassAttribute: Microcontroller&amp;_
+(Reference to the microcontroller
+the task is running on. Assigned
+when added to the microcontroller.)
+--
+#VirtualMethod(): int
+/+main()/
+/This is the user code implemented in a task./
+--
+#Method(): void
+/+run()/
+/Will look something like this:/
+/(This is what will get turned into a thread)/
+/void run() {/
+/   auto err = main();/
+/   signal_task_done(err);/
+/}/
+--
+#Method(error_code: int): void
+/+signal_task_done()/
+--
+#Method(uc: Microcontroller&amp;): void
+/+assign_uc()/
+/Called only once when it's added to the/
+/microcontroller. This method will also/
+/assign the process ID./
+group=1</panel_attributes><additional_attributes></additional_attributes></element></diagram>
