@@ -14,10 +14,6 @@ _-ClassAttribute: String_
 (Assigned by developer)
 _-ClassAttribute: Clock_
 --
--voltage: double
-(Assigned by developer)
-_-ClassAttribute: double_
---
 -peripherals: Map&lt;String, Peripheral&gt;
 (Added to by factory method)
 _-ClassAttribute: Map&lt;String, Peripheral&gt;_
@@ -49,7 +45,7 @@ private:
 #Method(delta_t: duration): void
 /+tick()/
 --
-#Method(): size_t
+#Method(): utilization_t
 /+ram_utilization()/
 /Returns the ram utilization of all tasks being run on the/
 /microcontroller. (Will likely be something similar to:/
