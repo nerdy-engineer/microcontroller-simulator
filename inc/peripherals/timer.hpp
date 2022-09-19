@@ -2,7 +2,7 @@
 #ifndef TIMER_HPP
 #define TIMER_HPP
 
-#include "peripheral_base.hpp"
+#include "peripherals/peripheral_base.hpp"
 #include "clock.hpp"
 
 namespace simulator::peripherals {
