@@ -4,7 +4,7 @@
 
 
 #include <list>
-#include "peripheral_base.hpp"
+#include "peripherals/peripheral_base.hpp"
 #include "clock.hpp"
 #include "entity.hpp"
 
@@ -33,7 +33,7 @@ class MicrocontrollerBase : public Entity {
 
     virtual void run();         // This is the user's microcontroller code that will get run during the simulation
 
-    void delay(time_t duration) const noexcept {
+    void delay(uint16_t duration) const noexcept {
         // Implementation required
     }
 

@@ -3,7 +3,7 @@
 #define PIN_HPP
 
 #include "state.hpp"
-#include "peripheral_base.hpp"
+#include "peripherals/peripheral_base.hpp"
 #include <vector>
 
 
