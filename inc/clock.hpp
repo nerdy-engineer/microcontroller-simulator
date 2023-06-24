@@ -19,7 +19,7 @@ class Clock : public Entity {
 
     public:
     Clock(uint32_t frequency, Clock& clock) :
-        Clock(frequency)
+        Clock(frequency) 
     {
         clock.subscribe(*this);
     }
