@@ -3,12 +3,13 @@
 #define DEBUG_COMPONENT_HPP
 
 #include <iostream>
-#include "time.hpp"
-#include "component_base.hpp"
+#include <cmath>
+#include "simulation\time.hpp"
+#include "simulation\component_base.hpp"
 
 namespace simulation {
 
-class debug : component_base {
+class debug : public component_base {
 public:
     debug() {
 
