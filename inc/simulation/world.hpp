@@ -6,10 +6,10 @@
 #include <map>
 #include <string>
 #include <memory>
-#include "simulation\time.hpp"
-#include "simulation\component_base.hpp"
-#include "simulation\processor_base.hpp"
-#include "simulation\node.hpp"
+#include "time.hpp"
+#include "component_base.hpp"
+#include "processor_base.hpp"
+#include "node.hpp"
 
 namespace simulation {
 

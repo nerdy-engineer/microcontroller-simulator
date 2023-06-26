@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include <cmath>
-#include "simulation\time.hpp"
-#include "simulation\component_base.hpp"
+#include "time.hpp"
+#include "component_base.hpp"
 
 namespace simulation {
 
@@ -18,7 +18,7 @@ public:
     virtual void tick(tstep_t dt) override {
         acc += dt;
         if (acc-dt < floor(acc) && acc > floor(acc)) {
-            std::cout << "Time: " << acc << " seconds";
+            std::cout << "Time: " << acc << " seconds\n";
         }
     }
 

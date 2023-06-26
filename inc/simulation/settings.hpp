@@ -3,7 +3,7 @@
 #define SETTINGS_HPP
 
 #include <cinttypes>
-#include "simulation\time.hpp"
+#include "time.hpp"
 
 namespace simulation {
 

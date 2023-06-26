@@ -2,7 +2,7 @@
 #ifndef COMPONENT_BASE
 #define COMPONENT_BASE
 
-#include "simulation\time.hpp"
+#include "time.hpp"
 
 namespace simulation {
 
