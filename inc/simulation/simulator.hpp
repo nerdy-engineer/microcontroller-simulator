@@ -5,12 +5,11 @@
 
 #include <memory>
 #include <vector>
-#include "settings.hpp"
-#include "world.hpp"
-#include "node.hpp"
-#include "component_base.hpp"
-#include "debug_component.hpp"
-#include "time.hpp"
+#include "simulation\settings.hpp"
+#include "simulation\world.hpp"
+#include "simulation\node.hpp"
+#include "simulation\component_base.hpp"
+#include "simulation\time.hpp"
 
 
 namespace simulation {

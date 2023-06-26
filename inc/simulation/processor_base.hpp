@@ -8,9 +8,9 @@
 namespace simulation {
 
 class processor_base : public component_base {
+public:
 
-
-
+    virtual void tick(tstep_t dt) override = 0;
 
 };
 
