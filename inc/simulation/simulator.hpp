@@ -5,11 +5,11 @@
 
 #include <memory>
 #include <vector>
-#include "simulation\settings.hpp"
-#include "simulation\world.hpp"
-#include "simulation\node.hpp"
-#include "simulation\component_base.hpp"
-#include "simulation\time.hpp"
+#include "settings.hpp"
+#include "world.hpp"
+#include "node.hpp"
+#include "component_base.hpp"
+#include "time.hpp"
 
 
 namespace simulation {
@@ -24,6 +24,14 @@ public:
         w_{w}
     {
 
+    }
+
+    void run() {
+        tstamp_t t = tstart;
+        while (t < tend) {
+            update(sim_dt);
+            t++;
+        }
     }
 
     void update(tstep_t dt) {

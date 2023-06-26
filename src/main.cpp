@@ -1,11 +1,11 @@
 #include <iostream>
 #include <vector>
 #include <memory>
-#include "simulation\simulator.hpp"
-#include "simulation\component_base.hpp"
-#include "simulation\world.hpp"
-#include "simulation\time.hpp"
-#include "peripherals\debug_component.hpp"
+#include "simulator.hpp"
+#include "component_base.hpp"
+#include "world.hpp"
+#include "time.hpp"
+#include "debug_component.hpp"
 
 using namespace simulation;
 
@@ -14,7 +14,7 @@ int main() {
     // Build simulation world
     auto comp = debug();
     auto w = world();
-    w.add(std::make_shared<component_base>(comp));
+    w.add(std::make_shared<debug>(comp));
 
 
 
@@ -25,10 +25,9 @@ int main() {
 
 
     // Run simulation loop
+    sim.run();
 
-
-
-
+    std::cout << "Simulation complete." << std::endl;
 
 
 }
