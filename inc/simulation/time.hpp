@@ -6,8 +6,8 @@
 
 namespace simulation {
 
-using tstamp_t = uint64_t;
-using tstep_t = double;
+using tstamp_t = uint64_t;  // Samples
+using tstep_t = double;     // Seconds
 
 }
 

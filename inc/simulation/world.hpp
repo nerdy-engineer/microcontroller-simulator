@@ -32,6 +32,7 @@ public:
 
     virtual void tick(tstep_t dt) override {
         for (auto e : entities_) {
+            // std::cout << "Entity tick...\t";
             e->tick(dt);
         }
         for (auto p : smart_entities_) {

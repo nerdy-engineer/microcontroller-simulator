@@ -23,12 +23,13 @@ public:
         proc_dt{s.proc_dt},
         w_{w}
     {
-
+        // tick_ratio... (how many processor ticks before a sim_tick)
+        double tick_ratio = sim_dt/proc_dt;
     }
 
     void run() {
         tstamp_t t = tstart;
-        while (t < tend) {
+        while (t < tend*sim_dt) {
             update(sim_dt);
             t++;
         }

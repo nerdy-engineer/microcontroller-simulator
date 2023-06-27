@@ -12,7 +12,7 @@ using namespace simulation;
 int main() {
 
     // Build simulation world
-    auto comp = debug();
+    auto comp = debug(0.5);
     auto w = world();
     w.add(std::make_shared<debug>(comp));
 
